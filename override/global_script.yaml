@@ -1,191 +1,23 @@
 # Clash Verge Rev 全局扩展脚本（懒人配置）/ Mihomo Party 覆写脚本
 # URL: https://github.com/dahaha-365/YaNet/
+# 
+# ------------------------------------------------------------------
+# 這是根據 JS 腳本產生的靜態 YAML 完整設定檔。
+# ------------------------------------------------------------------
 
-# 整个脚本的总开关，在 Mihomo Party 使用的话，请保持为 true
-# true = 启用，false = 禁用
-enable: true
-
-# 机场订阅（可以一直往下复制粘贴添加，注意格式对齐）
+# 機場訂閱
 proxy-providers:
   airport1:
-    url: "机场订阅链接放这里"
+    url: "https://sub-1.smjcdh.top/smjc/api/v1/client/subscribe?token=c0c800c965f24eac4d313a5a25c0bfae"
     type: http
     interval: 86400
     health-check:
       enable: true
       url: https://www.gstatic.com/generate_204
       interval: 300
-    proxy: 直连    
+    proxy: 直连
 
-# 分流规则配置，会自动生成对应的策略组
-# 设置的时候可遵循“最小，可用”原则，把自己不需要的规则全禁用掉，提高效率
-# true = 启用，false = 禁用
-ruleOptions:
-  apple: false          # 苹果服务
-  microsoft: true       # 微软服务
-  github: true          # Github 服务
-  google: true          # Google 服务
-  openai: true          # 国外 AI 和 GPT
-  spotify: true         # Spotify 音乐流媒体
-  youtube: true         # YouTube 视频
-  bahamut: false        # 巴哈姆特/动画疯
-  netflix: false        # Netflix 网飞
-  tiktok: true          # 国际版抖音
-  disney: false         # 迪士尼
-  pixiv: true           # Pixiv
-  hbo: false            # HBO
-  biliintl: true        # 哔哩哔哩东南亚版
-  tvb: false            # TVB
-  hulu: false           # Hulu
-  primevideo: false     # 亚马逊 prime video
-  telegram: true        # Telegram 通讯软件
-  line: true            # Line 通讯软件
-  whatsapp: true        # Whatsapp
-  games: true           # 游戏策略组
-  japan: true           # 日本网站策略组
-  # tracker: true       # 网络分析和跟踪服务
-  ads: true             # 常见的网络广告
-
-# 前置规则
-# 如果有需要前置的自定义规则，可以自行修改
-# 末尾11条为ps反监测使用
-rules:
-  - RULE-SET,applications,下载软件
-  - PROCESS-NAME,SunloginClient,DIRECT
-  - PROCESS-NAME,SunloginClient.exe,DIRECT
-  - PROCESS-NAME,AnyDesk,DIRECT
-  - PROCESS-NAME,AnyDesk.exe,DIRECT
-  - PROCESS-NAME,节点小宝,DIRECT
-  - PROCESS-NAME,nblink.exe,DIRECT
-  - PROCESS-NAME,NodeBabyLinkBackup,DIRECT
-  - PROCESS-NAME,NodeBabyLinkClient,DIRECT
-  - PROCESS-NAME,NodeBabyLinkRfile,DIRECT
-  - PROCESS-NAME,NodeBabyLinkBackup.exe,DIRECT
-  - PROCESS-NAME,NodeBabyLinkClient.exe,DIRECT
-  - PROCESS-NAME,NodeBabyLinkDevice.exe,DIRECT
-  - PROCESS-NAME,NodeBabyLinkOwjdxb.exe,DIRECT
-  - PROCESS-NAME,NodeBabyLinkRfile.exe,DIRECT
-  - PROCESS-NAME,NodeBabyLinkService.exe,DIRECT
-  - DOMAIN-SUFFIX,iepose.com,DIRECT
-  - DOMAIN-SUFFIX,ionewu.com,DIRECT
-  - DOMAIN-SUFFIX,3.219.243.226,REJECT
-  - DOMAIN-SUFFIX,3.233.129.217,REJECT
-  - DOMAIN-SUFFIX,54.224.241.105,REJECT
-  - DOMAIN-SUFFIX,18.213.11.84,REJECT
-  - DOMAIN-SUFFIX,34.237.241.83,REJECT
-  - DOMAIN-SUFFIX,50.16.47.176,REJECT
-  - DOMAIN-SUFFIX,52.6.155.20,REJECT
-  - DOMAIN-SUFFIX,52.22.41.97,REJECT
-  - DOMAIN-KEYWORD,Adobe,REJECT
-  - DOMAIN-KEYWORD,adobe,REJECT
-  - PROCESS-NAME,Photoshop.exe,REJECT
-
-# 地区配置，通过regex匹配代理节点名称
-# regex会有一定概率误判，自己调整一下吧
-# excludeHighPercentage是排除高倍率节点的开关，只对地区分组有效
-# 倍率大于regions里的ratioLimit值的代理节点会被排除
-regionOptions:
-  excludeHighPercentage: true
-  regions:
-    - name: 🇭🇰香港
-      regex: /港|🇭🇰|hk|hongkong|hong kong/i
-      ratioLimit: 1
-      icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Hong_Kong.png
-    - name: 🇺🇸美国
-      regex: /(?!.*aus)(?=.*(美|🇺🇸|us(?!t)|usa|american|united states)).*/i
-      ratioLimit: 1
-      icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_States.png
-    - name: 🇯🇵日本
-      regex: /日本|🇯🇵|jp|japan/i
-      ratioLimit: 1
-      icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Japan.png
-    - name: 🇰🇷韩国
-      regex: /韩|🇰🇷|kr|korea/i
-      ratioLimit: 1
-      icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Korea.png
-    - name: 🇸🇬新加坡
-      regex: /新加坡|🇸🇬|sg|singapore/i
-      ratioLimit: 1
-      icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Singapore.png
-    - name: 🇨🇳中国大陆
-      regex: /中国|🇨🇳|cn|china/i
-      ratioLimit: 1
-      icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/China_Map.png
-    - name: 🇹🇼台湾
-      regex: /台湾|🇹🇼|tw|taiwan|tai wan/i
-      ratioLimit: 1
-      icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/China.png
-    - name: 🇬🇧英国
-      regex: /英|🇬🇧|uk|united kingdom|great britain/i
-      ratioLimit: 1
-      icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_Kingdom.png
-    - name: 🇩🇪德国
-      regex: /德国|🇩🇪|de|germany/i
-      ratioLimit: 1
-      icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Germany.png
-    - name: 🇲🇾马来西亚
-      regex: /马来|🇲🇾|my|malaysia/i
-      ratioLimit: 1
-      icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Malaysia.png
-    - name: 🇹🇷土耳其
-      regex: /土耳其|🇹🇷|tk|turkey/i
-      ratioLimit: 1
-      icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Turkey.png
-    - name: 🇨🇦加拿大
-      regex: /加拿大|🇨🇦|ca|canada/i
-      ratioLimit: 1
-      icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Canada.png
-    - name: 🇦🇺澳大利亚
-      regex: /澳大利亚|🇦🇺|au|australia|sydney/i
-      ratioLimit: 1
-      icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Australia.png
-
-# 其实两组DNS就够了，一组国内，一组国外
-# defaultDNS是用来解析DNS的，必须为IP
-# DNS最好不要超过两个，从业界某知名APP的文档里学的
-defaultDNS:
-  - tls://223.5.5.5
-
-chinaDNS:
-  - 119.29.29.29
-  - 223.5.5.5
-
-foreignDNS:
-  - https://120.53.53.53/dns-query
-  - https://223.5.5.5/dns-query
-
-# DNS相关配置
-dnsConfig:
-  enable: true
-  listen: :1053
-  ipv6: true
-  prefer-h3: true
-  use-hosts: true
-  use-system-hosts: true
-  respect-rules: true
-  enhanced-mode: fake-ip
-  fake-ip-range: 198.18.0.1/16
-  fake-ip-filter:
-    - "*"
-    - +.lan
-    - +.local
-    - +.market.xiaomi.com
-  # default-nameserver: [...defaultDNS]
-  nameserver:
-    - https://120.53.53.53/dns-query
-    - https://223.5.5.5/dns-query
-  proxy-server-nameserver:
-    - https://120.53.53.53/dns-query
-    - https://223.5.5.5/dns-query
-  # 这里对域名解析进行分流
-  # 由于默认dns是国外的了，只需要把国内ip和域名分流到国内dns
-  nameserver-policy:
-    geosite:private: system
-    geosite:cn,steam@cn,category-games@cn,microsoft@cn,apple@cn:
-      - 119.29.29.29
-      - 223.5.5.5
-
-# 规则集通用配置
+# 規則集通用配置
 ruleProviderCommon:
   type: http
   format: yaml
@@ -200,22 +32,13 @@ groupBaseOption:
   max-failed-times: 3
   hidden: false
 
-ruleProviders:
-  applications:
-    type: http
-    format: text
-    interval: 86400
-    behavior: classical
-    url: https://github.com/DustinWin/ruleset_geodata/raw/refs/heads/mihomo-ruleset/applications.list
-    path: ./ruleset/DustinWin/applications.list
-
-# 程序入口对应配置（直接映射config修改项）
+# 程序入口对应配置
 allow-lan: true
 bind-address: "*"
 mode: rule
 dns:
   enable: true
-  listen: :1053
+  listen: ':1053'
   ipv6: true
   prefer-h3: true
   use-hosts: true
@@ -228,7 +51,6 @@ dns:
     - +.lan
     - +.local
     - +.market.xiaomi.com
-  # default-nameserver: [...defaultDNS]
   nameserver:
     - https://120.53.53.53/dns-query
     - https://223.5.5.5/dns-query
@@ -236,8 +58,8 @@ dns:
     - https://120.53.53.53/dns-query
     - https://223.5.5.5/dns-query
   nameserver-policy:
-    geosite:private: system
-    geosite:cn,steam@cn,category-games@cn,microsoft@cn,apple@cn:
+    'geosite:private': system
+    'geosite:cn,steam@cn,category-games@cn,microsoft@cn,apple@cn':
       - 119.29.29.29
       - 223.5.5.5
 profile:
@@ -245,17 +67,12 @@ profile:
   store-fake-ip: true
 unified-delay: true
 tcp-concurrent: true
-# 这个值设置大点能省电，笔记本和手机需要关注一下
 keep-alive-interval: 1800
 find-process-mode: strict
 geodata-mode: true
-# 适合小内存环境，如果在旁路由里运行可以改成standard
 geodata-loader: memconservative
 geo-auto-update: true
 geo-update-interval: 24
-# 不开域名嗅探的话，日志里只会记录请求的ip，对查找问题不方便
-# override-destination默认值是true，但是个人建议全局设为false，否则某些应用会出现莫名其妙的问题
-# Mijia Cloud跳过是网上抄的
 sniffer:
   enable: true
   force-dns-mapping: true
@@ -291,7 +108,6 @@ sniffer:
   skip-domain:
     - Mijia Cloud
     - +.oray.com
-# write-to-system如果设为true的话，有可能出现电脑时间不对的问题
 ntp:
   enable: true
   write-to-system: false
@@ -311,172 +127,17 @@ geox-url:
   mmdb: https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb
   asn: https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb
 
-# 总开关关闭时不处理策略组（YAML中通过启用/禁用对应配置模拟）
-# 以下配置基于 ruleOptions 中为 true 的项生成，与原脚本逻辑一致
-
-# 地区代理组（动态匹配符合正则和倍率限制的节点）
-regionProxyGroups:
-  - name: 🇭🇰香港
-    type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
-    tolerance: 50
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Hong_Kong.png
-    proxies: [动态匹配节点（正则：/港|🇭🇰|hk|hongkong|hong kong/i，倍率≤1）]
-  - name: 🇺🇸美国
-    type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
-    tolerance: 50
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_States.png
-    proxies: [动态匹配节点（正则：/(?!.*aus)(?=.*(美|🇺🇸|us(?!t)|usa|american|united states)).*/i，倍率≤1）]
-  - name: 🇯🇵日本
-    type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
-    tolerance: 50
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Japan.png
-    proxies: [动态匹配节点（正则：/日本|🇯🇵|jp|japan/i，倍率≤1）]
-  - name: 🇰🇷韩国
-    type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
-    tolerance: 50
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Korea.png
-    proxies: [动态匹配节点（正则：/韩|🇰🇷|kr|korea/i，倍率≤1）]
-  - name: 🇸🇬新加坡
-    type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
-    tolerance: 50
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Singapore.png
-    proxies: [动态匹配节点（正则：/新加坡|🇸🇬|sg|singapore/i，倍率≤1）]
-  - name: 🇨🇳中国大陆
-    type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
-    tolerance: 50
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/China_Map.png
-    proxies: [动态匹配节点（正则：/中国|🇨🇳|cn|china/i，倍率≤1）]
-  - name: 🇹🇼台湾
-    type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
-    tolerance: 50
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/China.png
-    proxies: [动态匹配节点（正则：/台湾|tw|taiwan|tai wan/i，倍率≤1）]
-  - name: 🇬🇧英国
-    type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
-    tolerance: 50
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_Kingdom.png
-    proxies: [动态匹配节点（正则：/英|🇬🇧|uk|united kingdom|great britain/i，倍率≤1）]
-  - name: 🇩🇪德国
-    type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
-    tolerance: 50
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Germany.png
-    proxies: [动态匹配节点（正则：/德国|🇩🇪|de|germany/i，倍率≤1）]
-  - name: 🇲🇾马来西亚
-    type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
-    tolerance: 50
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Malaysia.png
-    proxies: [动态匹配节点（正则：/马来|🇲🇾|my|malaysia/i，倍率≤1）]
-  - name: 🇹🇷土耳其
-    type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
-    tolerance: 50
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Turkey.png
-    proxies: [动态匹配节点（正则：/土耳其|🇹🇷|tk|turkey/i，倍率≤1）]
-  - name: 🇨🇦加拿大
-    type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
-    tolerance: 50
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Canada.png
-    proxies: [动态匹配节点（正则：/加拿大|🇨🇦|ca|canada/i，倍率≤1）]
-  - name: 🇦🇺澳大利亚
-    type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
-    tolerance: 50
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Australia.png
-    proxies: [动态匹配节点（正则：/澳大利亚|🇦🇺|au|australia|sydney/i，倍率≤1）]
-
 # 直连节点
 proxies:
   - name: 直连
     type: direct
     udp: true
 
-# 代理组（包含默认节点、各服务组、固定组、地区组）
+# 代理组
 proxy-groups:
   # 默认节点组
   - name: 默认节点
     type: select
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png
     proxies:
       - 🇭🇰香港
@@ -494,16 +155,12 @@ proxy-groups:
       - 🇦🇺澳大利亚
       - 其他节点
       - 直连
+    <<: *groupBaseOption
 
-  # 启用 openai 时添加（ruleOptions.openai: true）
+  # 启用 openai 时添加
   - name: 国外AI
     type: select
-    interval: 300
-    timeout: 3000
     url: https://chat.openai.com/cdn-cgi/trace
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/ChatGPT.png
     proxies:
       - 默认节点
@@ -521,16 +178,12 @@ proxy-groups:
       - 🇨🇦加拿大
       - 🇦🇺澳大利亚
       - 直连
+    <<: *groupBaseOption
 
-  # 启用 microsoft 时添加（ruleOptions.microsoft: true）
+  # 启用 microsoft 时添加
   - name: 微软服务
     type: select
-    interval: 300
-    timeout: 3000
     url: http://www.msftconnecttest.com/connecttest.txt
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Microsoft.png
     proxies:
       - 默认节点
@@ -548,16 +201,12 @@ proxy-groups:
       - 🇨🇦加拿大
       - 🇦🇺澳大利亚
       - 直连
+    <<: *groupBaseOption
 
-  # 启用 github 时添加（ruleOptions.github: true）
+  # 启用 github 时添加
   - name: Github
     type: select
-    interval: 300
-    timeout: 3000
     url: https://github.com/robots.txt
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/GitHub.png
     proxies:
       - 默认节点
@@ -569,22 +218,18 @@ proxy-groups:
       - 🇨🇳中国大陆
       - 🇹🇼台湾
       - 🇬🇧英国
-      - 🇩🇪德国
+      - 🇩🇪德國
       - 🇲🇾马来西亚
       - 🇹🇷土耳其
       - 🇨🇦加拿大
       - 🇦🇺澳大利亚
       - 直连
+    <<: *groupBaseOption
 
-  # 启用 google 时添加（ruleOptions.google: true）
+  # 启用 google 时添加
   - name: 谷歌服务
     type: select
-    interval: 300
-    timeout: 3000
     url: http://www.google.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Google_Search.png
     proxies:
       - 默认节点
@@ -602,16 +247,12 @@ proxy-groups:
       - 🇨🇦加拿大
       - 🇦🇺澳大利亚
       - 直连
+    <<: *groupBaseOption
 
-  # 启用 spotify 时添加（ruleOptions.spotify: true）
+  # 启用 spotify 时添加
   - name: Spotify
     type: select
-    interval: 300
-    timeout: 3000
     url: http://spclient.wg.spotify.com/signup/public/v1/account
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Spotify.png
     proxies:
       - 默认节点
@@ -629,16 +270,12 @@ proxy-groups:
       - 🇨🇦加拿大
       - 🇦🇺澳大利亚
       - 直连
+    <<: *groupBaseOption
 
-  # 启用 youtube 时添加（ruleOptions.youtube: true）
+  # 启用 youtube 时添加
   - name: YouTube
     type: select
-    interval: 300
-    timeout: 3000
     url: https://www.youtube.com/s/desktop/494dd881/img/favicon.ico
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/YouTube.png
     proxies:
       - 默认节点
@@ -656,16 +293,12 @@ proxy-groups:
       - 🇨🇦加拿大
       - 🇦🇺澳大利亚
       - 直连
+    <<: *groupBaseOption
 
-  # 启用 tiktok 时添加（ruleOptions.tiktok: true）
+  # 启用 tiktok 时添加
   - name: Tiktok
     type: select
-    interval: 300
-    timeout: 3000
     url: https://www.tiktok.com/
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/TikTok.png
     proxies:
       - 默认节点
@@ -683,16 +316,12 @@ proxy-groups:
       - 🇨🇦加拿大
       - 🇦🇺澳大利亚
       - 直连
+    <<: *groupBaseOption
 
-  # 启用 pixiv 时添加（ruleOptions.pixiv: true）
+  # 启用 pixiv 时添加
   - name: Pixiv
     type: select
-    interval: 300
-    timeout: 3000
     url: http://spclient.wg.spotify.com/signup/public/v1/account
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     icon: https://play-lh.googleusercontent.com/8pFuLOHF62ADcN0ISUAyEueA5G8IF49mX_6Az6pQNtokNVHxIVbS1L2NM62H-k02rLM=w240-h480-rw
     proxies:
       - 默认节点
@@ -706,20 +335,16 @@ proxy-groups:
       - 🇬🇧英国
       - 🇩🇪德国
       - 🇲🇾马来西亚
-      - 🇹🇷土耳其
+      - 🇹🇷土耳S其
       - 🇨🇦加拿大
       - 🇦🇺澳大利亚
       - 直连
+    <<: *groupBaseOption
 
-  # 启用 biliintl 时添加（ruleOptions.biliintl: true）
+  # 启用 biliintl 时添加
   - name: 哔哩哔哩东南亚
     type: select
-    interval: 300
-    timeout: 3000
     url: https://www.bilibili.tv/
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/bilibili_3.png
     proxies:
       - 默认节点
@@ -737,16 +362,12 @@ proxy-groups:
       - 🇹🇷土耳其
       - 🇨🇦加拿大
       - 🇦🇺澳大利亚
+    <<: *groupBaseOption
 
-  # 启用 telegram 时添加（ruleOptions.telegram: true）
+  # 启用 telegram 时添加
   - name: Telegram
     type: select
-    interval: 300
-    timeout: 3000
     url: http://www.telegram.org/img/website_icon.svg
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png
     proxies:
       - 默认节点
@@ -764,16 +385,12 @@ proxy-groups:
       - 🇨🇦加拿大
       - 🇦🇺澳大利亚
       - 直连
+    <<: *groupBaseOption
 
-  # 启用 line 时添加（ruleOptions.line: true）
+  # 启用 line 时添加
   - name: Line
     type: select
-    interval: 300
-    timeout: 3000
     url: https://line.me/page-data/app-data.json
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Line.png
     proxies:
       - 默认节点
@@ -791,16 +408,12 @@ proxy-groups:
       - 🇨🇦加拿大
       - 🇦🇺澳大利亚
       - 直连
+    <<: *groupBaseOption
 
-  # 启用 whatsapp 时添加（ruleOptions.whatsapp: true）
+  # 启用 whatsapp 时添加
   - name: WhatsApp
     type: select
-    interval: 300
-    timeout: 3000
     url: https://web.whatsapp.com/data/manifest.json
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     icon: https://static.whatsapp.net/rsrc.php/v3/yP/r/rYZqPCBaG70.png
     proxies:
       - 默认节点
@@ -818,16 +431,11 @@ proxy-groups:
       - 🇨🇦加拿大
       - 🇦🇺澳大利亚
       - 直连
+    <<: *groupBaseOption
 
-  # 启用 games 时添加（ruleOptions.games: true）
+  # 启用 games 时添加
   - name: 游戏专用
     type: select
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Game.png
     proxies:
       - 默认节点
@@ -845,16 +453,12 @@ proxy-groups:
       - 🇨🇦加拿大
       - 🇦🇺澳大利亚
       - 直连
+    <<: *groupBaseOption
 
-  # 启用 japan 时添加（ruleOptions.japan: true）
+  # 启用 japan 时添加
   - name: 日本网站
     type: select
-    interval: 300
-    timeout: 3000
     url: https://r.r10s.jp/com/img/home/logo/touch.png
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/JP.png
     proxies:
       - 默认节点
@@ -872,31 +476,21 @@ proxy-groups:
       - 🇨🇦加拿大
       - 🇦🇺澳大利亚
       - 直连
+    <<: *groupBaseOption
 
-  # 启用 ads 时添加（ruleOptions.ads: true）
+  # 启用 ads 时添加
   - name: 广告过滤
     type: select
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Advertising.png
     proxies:
       - REJECT
       - 直连
       - 默认节点
+    <<: *groupBaseOption
 
   # 固定代理组：下载软件
   - name: 下载软件
     type: select
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Download.png
     proxies:
       - 直连
@@ -916,16 +510,11 @@ proxy-groups:
       - 🇹🇷土耳其
       - 🇨🇦加拿大
       - 🇦🇺澳大利亚
+    <<: *groupBaseOption
 
   # 固定代理组：其他外网
   - name: 其他外网
     type: select
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Streaming!CN.png
     proxies:
       - 默认节点
@@ -943,16 +532,12 @@ proxy-groups:
       - 🇹🇷土耳其
       - 🇨🇦加拿大
       - 🇦🇺澳大利亚
+    <<: *groupBaseOption
 
   # 固定代理组：国内网站
   - name: 国内网站
     type: select
-    interval: 300
-    timeout: 3000
     url: http://wifi.vivo.com.cn/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/StreamingCN.png
     proxies:
       - 直连
@@ -970,165 +555,129 @@ proxy-groups:
       - 🇹🇷土耳其
       - 🇨🇦加拿大
       - 🇦🇺澳大利亚
+    <<: *groupBaseOption
 
-  # 地区代理组（合并进来）
+  # 地区代理组
+  # --------------------------------------------------
+  # 【修正】: 以下 filter 已更新，
+  #          用於過濾倍率 < 2x (不包含 2x) 的節點
+  # --------------------------------------------------
   - name: 🇭🇰香港
     type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     tolerance: 50
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Hong_Kong.png
-    proxies: [动态匹配节点（正则：/港|🇭🇰|hk|hongkong|hong kong/i，倍率≤1）]
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:港|🇭🇰|hk|hongkong|hong kong)'
+    <<: *groupBaseOption
   - name: 🇺🇸美国
     type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     tolerance: 50
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_States.png
-    proxies: [动态匹配节点（正则：/(?!.*aus)(?=.*(美|🇺🇸|us(?!t)|usa|american|united states)).*/i，倍率≤1）]
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:(?!.*aus)(?=.*(美|🇺🇸|us(?!t)|usa|american|united states)).*)'
+    <<: *groupBaseOption
   - name: 🇯🇵日本
     type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     tolerance: 50
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Japan.png
-    proxies: [动态匹配节点（正则：/日本|🇯🇵|jp|japan/i，倍率≤1）]
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:日本|🇯🇵|jp|japan)'
+    <<: *groupBaseOption
   - name: 🇰🇷韩国
     type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     tolerance: 50
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Korea.png
-    proxies: [动态匹配节点（正则：/韩|🇰🇷|kr|korea/i，倍率≤1）]
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:韩|🇰🇷|kr|korea)'
+    <<: *groupBaseOption
   - name: 🇸🇬新加坡
     type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     tolerance: 50
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Singapore.png
-    proxies: [动态匹配节点（正则：/新加坡|🇸🇬|sg|singapore/i，倍率≤1）]
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:新加坡|🇸🇬|sg|singapore)'
+    <<: *groupBaseOption
   - name: 🇨🇳中国大陆
     type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     tolerance: 50
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/China_Map.png
-    proxies: [动态匹配节点（正则：/中国|🇨🇳|cn|china/i，倍率≤1）]
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:中国|🇨🇳|cn|china)'
+    <<: *groupBaseOption
   - name: 🇹🇼台湾
     type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     tolerance: 50
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/China.png
-    proxies: [动态匹配节点（正则：/台湾|tw|taiwan|tai wan/i，倍率≤1）]
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:台湾|🇹🇼|tw|taiwan|tai wan)'
+    <<: *groupBaseOption
   - name: 🇬🇧英国
     type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     tolerance: 50
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_Kingdom.png
-    proxies: [动态匹配节点（正则：/英|🇬🇧|uk|united kingdom|great britain/i，倍率≤1）]
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:英|🇬🇧|uk|united kingdom|great britain)'
+    <<: *groupBaseOption
   - name: 🇩🇪德国
     type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     tolerance: 50
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Germany.png
-    proxies: [动态匹配节点（正则：/德国|🇩🇪|de|germany/i，倍率≤1）]
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:德国|🇩🇪|de|germany)'
+    <<: *groupBaseOption
   - name: 🇲🇾马来西亚
     type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     tolerance: 50
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Malaysia.png
-    proxies: [动态匹配节点（正则：/马来|🇲🇾|my|malaysia/i，倍率≤1）]
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:马来|🇲🇾|my|malaysia)'
+    <<: *groupBaseOption
   - name: 🇹🇷土耳其
     type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     tolerance: 50
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Turkey.png
-    proxies: [动态匹配节点（正则：/土耳其|🇹🇷|tk|turkey/i，倍率≤1）]
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:土耳其|🇹🇷|tk|turkey)'
+    <<: *groupBaseOption
   - name: 🇨🇦加拿大
     type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     tolerance: 50
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Canada.png
-    proxies: [动态匹配节点（正则：/加拿大|🇨🇦|ca|canada/i，倍率≤1）]
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:加拿大|🇨🇦|ca|canada)'
+    <<: *groupBaseOption
   - name: 🇦🇺澳大利亚
     type: url-test
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     tolerance: 50
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Australia.png
-    proxies: [动态匹配节点（正则：/澳大利亚|🇦🇺|au|australia|sydney/i，倍率≤1）]
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:澳大利亚|🇦🇺|au|australia|sydney)'
+    <<: *groupBaseOption
 
-  # 其他节点组（当存在未分类节点时启用）
+  # 其他节点组（未分類節點 和 > 2x 的節點）
   - name: 其他节点
     type: select
-    interval: 300
-    timeout: 3000
-    url: http://cp.cloudflare.com/generate_204
-    lazy: true
-    max-failed-times: 3
-    hidden: false
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/World_Map.png
-    proxies: [动态匹配未分类节点]
+    use:
+      - airport1
+    # 排除所有 "匹配地區 且 倍率 < 2x" 的節點
+    exclude-filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:(港|🇭🇰|hk|hongkong|hong kong)|((?!.*aus)(?=.*(美|🇺🇸|us(?!t)|usa|american|united states)).*)|(日本|🇯🇵|jp|japan)|(韩|🇰🇷|kr|korea)|(新加坡|🇸🇬|sg|singapore)|(中国|🇨🇳|cn|china)|(台湾|🇹🇼|tw|taiwan|tai wan)|(英|🇬🇧|uk|united kingdom|great britain)|(德国|🇩🇪|de|germany)|(马来|🇲🇾|my|malaysia)|(土耳其|🇹🇷|tk|turkey)|(加拿大|🇨🇦|ca|canada)|(澳大利亚|🇦🇺|au|australia|sydney))'
+    <<: *groupBaseOption
 
-# 规则集（包含前置规则 + 动态添加规则）
+# 规则集
 rules:
   # 前置规则
   - RULE-SET,applications,下载软件
@@ -1219,7 +768,7 @@ rules:
   - GEOIP,cn,国内网站,no-resolve
   - MATCH,其他外网
 
-# 规则提供者（包含默认 + 动态添加）
+# 规则提供者
 rule-providers:
   applications:
     type: http
