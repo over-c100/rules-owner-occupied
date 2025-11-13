@@ -1,0 +1,602 @@
+# Clash Verge Rev 全局扩展脚本（懒人配置）/ Mihomo Party 覆写脚本
+# 
+# ------------------------------------------------------------------
+# 【最終合併版】
+# 基礎: 您提供的機場原始檔 (用於顯示流量狀態)
+# 合併: 來自 JS 腳本的自訂 DNS, 規則, 以及動態過濾群組 (倍率 < 2x)
+# ------------------------------------------------------------------
+
+# --- 來自機場原始檔的基礎設定 ---
+Mixed-port: 7890
+allow-lan: true
+bind-address: '*'
+mode: rule
+log-level: info
+external-controller: '127.0.0.1:9090'
+global-client-fingerprint: chrome
+unified-delay: true
+tcp-concurrent: true
+
+# --- 來自 JS 腳本的核心設定 ---
+geox-url:
+  geoip: https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat
+  geosite: https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat
+  mmdb: https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb
+  asn: https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb
+
+dns:
+  enable: true
+  listen: ':1053'
+  ipv6: true
+  prefer-h3: true
+  use-hosts: true
+  use-system-hosts: true
+  respect-rules: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - "*"
+    - +.lan
+    - +.local
+    - +.market.xiaomi.com
+  nameserver:
+    - https://120.53.53.53/dns-query
+    - https://223.5.5.5/dns-query
+  proxy-server-nameserver:
+    - https://120.53.53.53/dns-query
+    - https://223.5.5.5/dns-query
+  nameserver-policy:
+    'geosite:private': system
+    'geosite:cn,steam@cn,category-games@cn,microsoft@cn,apple@cn':
+      - 119.29.29.29
+      - 223.5.5.5
+
+profile:
+  store-selected: true
+  store-fake-ip: true
+keep-alive-interval: 1800
+find-process-mode: strict
+geodata-mode: true
+geodata-loader: memconservative
+geo-auto-update: true
+geo-update-interval: 24
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: false
+  override-destination: true
+  sniff:
+    TLS:
+      ports:
+        - 443
+        - 8443
+    HTTP:
+      ports:
+        - 80
+        - 8080-8880
+    QUIC:
+      ports:
+        - 443
+        - 8443
+  skip-src-address:
+    - 127.0.0.0/8
+    - 192.168.0.0/16
+    - 10.0.0.0/8
+    - 172.16.0.0/12
+  force-domain:
+    - +.google.com
+    - +.googleapis.com
+    - +.googleusercontent.com
+    - +.youtube.com
+    - +.facebook.com
+    - +.messenger.com
+    - +.fbcdn.net
+    - fbcdn-a.akamaihd.net
+  skip-domain:
+    - Mijia Cloud
+    - +.oray.com
+ntp:
+  enable: true
+  write-to-system: false
+  server: cn.ntp.org.cn
+tun:
+  exclude-interface:
+    - NodeBabyLink
+  route-exclude-address:
+    - 10.0.0.0/8
+    - 127.0.0.0/8
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+    - 198.18.0.0/15
+
+# 代理组通用配置 (錨點定義)
+.groupBaseOption: &groupBaseOption
+  interval: 300
+  timeout: 3000
+  url: http://cp.cloudflare.com/generate_204
+  lazy: true
+  max-failed-times: 3
+  hidden: false
+
+# --- 節點列表 (來自機場原始檔 + 自訂直連) ---
+proxies:
+  # 自訂的 "直连" 節點，供規則使用
+  - name: 直连
+    type: direct
+    udp: true
+  
+  # --- 以下為您機場的完整節點列表 ---
+  - { name: '剩余流量：73.92 GB', type: anytls, server: us-pz.aikunapp.com, port: 6001, password: f2946d3d-0a8d-4916-9313-664d1c647aa1, udp: true, sni: 127.0.0.1, skip-cert-verify: true, client-fingerprint: chrome }
+  - { name: '距离下次重置剩余：11 天', type: anytls, server: us-pz.aikunapp.com, port: 6001, password: f2946d3d-0a8d-4916-9313-664d1c647aa1, udp: true, sni: 127.0.0.1, skip-cert-verify: true, client-fingerprint: chrome }
+  - { name: 套餐到期：2026-03-23, type: anytls, server: us-pz.aikunapp.com, port: 6001, password: f2946d3d-0a8d-4916-9313-664d1c647aa1, udp: true, sni: 127.0.0.1, skip-cert-verify: true, client-fingerprint: chrome }
+  - { name: '美国 pz 电信优化', type: anytls, server: us-pz.aikunapp.com, port: 6001, password: f2946d3d-0a8d-4916-9313-664d1c647aa1, udp: true, sni: 127.0.0.1, skip-cert-verify: true, client-fingerprint: chrome }
+  - { name: '美国 rs 新协议', type: anytls, server: tj-us-1.aikunapp.com, port: 6001, password: f2946d3d-0a8d-4916-9313-664d1c647aa1, udp: true, sni: bootcdn.xuexi.cn, skip-cert-verify: true, client-fingerprint: chrome }
+  - { name: 1.5x-韩国-三网优化, type: anytls, server: krgc.aikunapp.com, port: 6001, password: f2946d3d-0a8d-4916-9313-664d1c647aa1, udp: true, sni: s0.awsstatic.com, skip-cert-verify: true, client-fingerprint: chrome }
+  - { name: 2x专线-日本-1, server: v4-aws-jp.aikunapp.com, port: 7001, skip-cert-verify: true, sni: d1--cn-gotcha204-3.bilivideo.com, type: hysteria2, password: f2946d3d-0a8d-4916-9313-664d1c647aa1 }
+  - { name: '2x专线-日本-2 (新协议)', type: anytls, server: v4-aws-jp.aikunapp.com, port: 7001, password: f2946d3d-0a8d-4916-9313-664d1c647aa1, udp: true, sni: d1--cn-gotcha204-3.bilivideo.com, skip-cert-verify: true, client-fingerprint: chrome }
+  - { name: '2x专线-日本-3 (IPv6)', type: trojan, server: v6-aws-jp.aikunapp.com, port: 7001, password: f2946d3d-0a8d-4916-9313-664d1c647aa1, udp: true, skip-cert-verify: true, sni: d1--cn-gotcha204-3.bilivideo.com, client-fingerprint: chrome, network: tcp }
+  - { name: '2x专线-日本-4 (IPv6)', server: v6-aws-jp.aikunapp.com, port: 7001, skip-cert-verify: true, sni: d1--cn-gotcha204-3.bilivideo.com, type: hysteria2, password: f2946d3d-0a8d-4916-9313-664d1c647aa1 }
+  - { name: 2x专线-香港-1, server: v4-aws-hk.aikunapp.com, port: 7001, skip-cert-verify: true, sni: d1--cn-gotcha204-3.bilivideo.com, type: hysteria2, password: f2946d3d-0a8d-4916-9313-664d1c647aa1 }
+  - { name: '2x专线-香港-2 (新协议)', type: anytls, server: v4-aws-hk.aikunapp.com, port: 7001, password: f2946d3d-0a8d-4916-9313-664d1c647aa1, udp: true, sni: d1--cn-gotcha204-3.bilivideo.com, skip-cert-verify: true, client-fingerprint: chrome }
+  - { name: '2x专线-香港-3 (IPv6)', type: trojan, server: v6-aws-hk.aikunapp.com, port: 7001, password: f2946d3d-0a8d-4916-9313-664d1c647aa1, udp: true, skip-cert-verify: true, sni: d1--cn-gotcha204-3.bilivideo.com, client-fingerprint: chrome, network: tcp }
+  - { name: '2x专线-香港-4 (IPv6)', server: v6-aws-hk.aikunapp.com, port: 7001, skip-cert-verify: true, sni: d1--cn-gotcha204-3.bilivideo.com, type: hysteria2, password: f2946d3d-0a8d-4916-9313-664d1c647aa1 }
+  - { name: 2x专线-新加坡-1, server: v4-aws-sg.aikunapp.com, port: 7001, skip-cert-verify: true, sni: d1--cn-gotcha204-3.bilivideo.com, type: hysteria2, password: f2946d3d-0a8d-4916-9313-664d1c647aa1 }
+  - { name: '2x专线-新加坡-2 (新协议)', type: anytls, server: v4-aws-sg.aikunapp.com, port: 7001, password: f2946d3d-0a8d-4916-9313-664d1c647aa1, udp: true, sni: d1--cn-gotcha204-3.bilivideo.com, skip-cert-verify: true, client-fingerprint: chrome }
+  - { name: '2x专线-新加坡-3 (IPv6)', type: trojan, server: v6-aws-sg.aikunapp.com, port: 7001, password: f2946d3d-0a8d-4916-9313-664d1c647aa1, udp: true, skip-cert-verify: true, sni: d1--cn-gotcha204-3.bilivideo.com, client-fingerprint: chrome, network: tcp }
+  - { name: '2x专线-新加坡-4 (IPv6)', server: v6-aws-sg.aikunapp.com, port: 7001, skip-cert-verify: true, sni: d1--cn-gotcha204-3.bilivideo.com, type: hysteria2, password: f2946d3d-0a8d-4916-9313-664d1c647aa1 }
+  - { name: 如果很少节点可用，去官网更新软件, type: vmess, server: 127.0.0.1, port: 20003, uuid: f2946d3d-0a8d-4916-9313-664d1c647aa1, alterId: 0, cipher: auto, udp: true, network: tcp }
+  - { name: '美国 DATASHACK (gpt优化)', server: us-ds.aikunapp.com, port: 5001, skip-cert-verify: true, sni: d1--cn-gotcha204-4.bilivideo.com, type: hysteria2, password: f2946d3d-0a8d-4916-9313-664d1c647aa1 }
+  - { name: '美国 DIRECT1 三网优化', server: us-rs.aikunapp.com, port: 5001, skip-cert-verify: true, sni: d1--cn-gotcha204-4.bilivideo.com, type: hysteria2, password: f2946d3d-0a8d-4916-9313-664d1c647aa1 }
+  - { name: '德国 hy2', server: 51.75.77.164, port: 5021, skip-cert-verify: true, sni: d1--cn-gotcha204-4.bilivideo.com, type: hysteria2, password: f2946d3d-0a8d-4916-9313-664d1c647aa1 }
+  - { name: '美国 DIRECT2 三网优化', server: us-oracle.aikunapp.com, port: 5001, skip-cert-verify: true, sni: d1--cn-gotcha204-4.bilivideo.com, type: hysteria2, password: f2946d3d-0a8d-4916-9313-664d1c647aa1 }
+  - { name: '加拿大 hy2', server: 158.69.192.77, port: 5021, skip-cert-verify: true, sni: d1--cn-gotcha204-4.bilivideo.com, type: hysteria2, password: f2946d3d-0a8d-4916-9313-664d1c647aa1 }
+  - { name: '法国 hy2', server: 51.68.227.243, port: 5021, skip-cert-verify: true, sni: d1--cn-gotcha204-4.bilivideo.com, type: hysteria2, password: f2946d3d-0a8d-4916-9313-664d1c647aa1 }
+  - { name: '加拿大 IPv6', server: '2607:5300:205:200::7996', port: 5021, skip-cert-verify: true, sni: d1--cn-gotcha204-4.bilivideo.com, type: hysteria2, password: f2946d3d-0a8d-4916-9313-664d1c647aa1 }
+  - { name: '法国 IPv6', server: '2001:41d0:305:2100::3967', port: 5021, skip-cert-verify: true, sni: d1--cn-gotcha204-4.bilivideo.com, type: hysteria2, password: f2946d3d-0a8d-4916-9313-664d1c647aa1 }
+  - { name: '加拿大 tls', type: anytls, server: 158.69.192.77, port: 6001, password: f2946d3d-0a8d-4916-9313-664d1c647aa1, udp: true, sni: swcdn.apple.com, skip-cert-verify: true, client-fingerprint: chrome }
+  - { name: '德国 tls', type: anytls, server: 51.75.77.164, port: 6001, password: f2946d3d-0a8d-4916-9313-664d1c647aa1, udp: true, sni: swcdn.apple.com, skip-cert-verify: true, client-fingerprint: chrome }
+  - { name: '加拿大 高速 cdn 1', type: vmess, server: cdncdncdn.aikunapp.com, port: 443, uuid: f2946d3d-0a8d-4916-9313-664d1c647aa1, alterId: 0, cipher: auto, udp: true, tls: true, skip-cert-verify: true, servername: r-BVLfpfFJkGdWAY3T.sm-node.com, client-fingerprint: chrome, network: ws, ws-opts: { path: '/vmess_ws/smjc/index?ed=8192', headers: { Host: cdn-ca.sm-node.com } } }
+  - { name: '美国 高速 cdn 1', type: vmess, server: cdncdncdn.aikunapp.com, port: 443, uuid: f2946d3d-0a8d-4916-9313-664d1c647aa1, alterId: 0, cipher: auto, udp: true, tls: true, skip-cert-verify: true, servername: r-lBl3HN9kgFaarHW4.sm-node.com, client-fingerprint: chrome, network: ws, ws-opts: { path: '/vmess_ws/smjc/index?ed=8192', headers: { Host: cdn-us.sm-node.com } } }
+  - { name: '加拿大 高速 cdn 2', type: vless, server: cdncdncdn.aikunapp.com, port: 443, uuid: f2946d3d-0a8d-4916-9313-664d1c647aa1, alterId: 0, cipher: auto, udp: true, flow: null, tls: true, skip-cert-verify: true, servername: r-ckqgjoa9u35xew06.sm-node.com, client-fingerprint: chrome, network: ws, ws-opts: { path: '/vless_ws/smjc/index?ed=8192', headers: { Host: cdn-ca.sm-node.com } } }
+  - { name: '美国 高速 cdn 2', type: vless, server: cdncdncdn.aikunapp.com, port: 443, uuid: f2946d3d-0a8d-4916-9313-664d1c647aa1, alterId: 0, cipher: auto, udp: true, flow: null, tls: true, skip-cert-verify: true, servername: r-NHisYAMjtALvuDgy.sm-node.com, client-fingerprint: chrome, network: ws, ws-opts: { path: '/vless_ws/smjc/index?ed=8192', headers: { Host: cdn-us.sm-node.com } } }
+  - { name: '香港 原生ip 新协议', type: anytls, server: hktddns1.aikunapp.com, port: 6001, password: f2946d3d-0a8d-4916-9313-664d1c647aa1, udp: true, sni: www.apple.com, skip-cert-verify: true, client-fingerprint: chrome }
+  - { name: '台湾(原生IP) 新协议', type: anytls, server: hinetddns1.aikunapp.com, port: 6001, password: f2946d3d-0a8d-4916-9313-664d1c647aa1, udp: true, sni: MzTSgT6uH36TDYqI.cn, skip-cert-verify: true, client-fingerprint: chrome }
+  - { name: 台湾(原生IP), server: hinetddns1.aikunapp.com, port: 5001, skip-cert-verify: true, sni: xuexi.cn, type: hysteria2, password: f2946d3d-0a8d-4916-9313-664d1c647aa1 }
+  - { name: '日本 樱花 新协议', type: anytls, server: tj-jp-1.aikunapp.com, port: 6001, password: f2946d3d-0a8d-4916-9313-664d1c647aa1, udp: true, sni: bootcdn.xuexi.cn, skip-cert-verify: true, client-fingerprint: chrome }
+
+
+# --- 代理群組 (來自 JS 腳本的自訂群組) ---
+proxy-groups:
+  # 默认节点组
+  - name: 默认节点
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png
+    proxies:
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇯🇵日本
+      - 🇰🇷韩国
+      - 🇸🇬新加坡
+      - 🇨🇳中国大陆
+      - 🇹🇼台湾
+      - 🇬🇧英国
+      - 🇩🇪德国
+      - 🇲🇾马来西亚
+      - 🇹🇷土耳其
+      - 🇨🇦加拿大
+      - 🇦🇺澳大利亚
+      - 其他节点
+      - 直连
+    <<: *groupBaseOption
+
+  # 启用 openai 时添加
+  - name: 国外AI
+    type: select
+    url: https://chat.openai.com/cdn-cgi/trace
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/ChatGPT.png
+    proxies:
+      - 默认节点
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇯🇵日本
+      - 🇰🇷韩国
+      - 🇸🇬新加坡
+      - 🇨🇳中国大陆
+      - 🇹🇼台湾
+      - 🇬🇧英国
+      - 🇩🇪德国
+      - 🇲🇾马来西亚
+      - 🇹🇷土耳其
+      - 🇨🇦加拿大
+      - 🇦🇺澳大利亚
+      - 直连
+    <<: *groupBaseOption
+
+  # 启用 microsoft 时添加
+  - name: 微软服务
+    type: select
+    url: http://www.msftconnecttest.com/connecttest.txt
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Microsoft.png
+    proxies:
+      - 默认节点
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇯🇵日本
+      - 🇰🇷韩国
+      - 🇸🇬新加坡
+      - 🇨🇳中国大陆
+      - 🇹🇼台湾
+      - 🇬🇧英国
+      - 🇩🇪德国
+      - 🇲🇾马来西亚
+      - 🇹🇷土耳其
+      - 🇨🇦加拿大
+      - 🇦🇺澳大利亚
+      - 直连
+    <<: *groupBaseOption
+
+  # 启用 github 时添加
+  - name: Github
+    type: select
+    url: https://github.com/robots.txt
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/GitHub.png
+    proxies:
+      - 默认节点
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇯🇵日本
+      - 🇰🇷韩国
+      - 🇸🇬新加坡
+      - 🇨🇳中国大陆
+      - 🇹🇼台湾
+      - 🇬🇧英国
+      - 🇩🇪德国
+      - 🇲🇾马来西亚
+      - 🇹🇷土耳其
+      - 🇨🇦加拿大
+      - 🇦🇺澳大利亚
+      - 直连
+    <<: *groupBaseOption
+
+  # 启用 google 时添加
+  - name: 谷歌服务
+    type: select
+    url: http://www.google.com/generate_204
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Google_Search.png
+    proxies:
+      - 默认节点
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇯🇵日本
+      - 🇰🇷韩国
+      - 🇸🇬新加坡
+      - 🇨🇳中国大陆
+      - 🇹🇼台湾
+      - 🇬🇧英国
+      - 🇩🇪德国
+      - 🇲🇾马来西亚
+      - 🇹🇷土耳其
+      - 🇨🇦加拿大
+      - 🇦🇺澳大利亚
+      - 直连
+    <<: *groupBaseOption
+
+  # 啟用 spotify 時添加
+  - name: Spotify
+    type: select
+    url: http://spclient.wg.spotify.com/signup/public/v1/account
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Spotify.png
+    proxies:
+      - 默认节点
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇯🇵日本
+      - 🇰🇷韩国
+      - 🇸🇬新加坡
+      - 🇨🇳中国大陆
+      - 🇹🇼台湾
+      - 🇬🇧英国
+      - 🇩🇪德国
+      - 🇲🇾马来西亚
+      - 🇹🇷土耳其
+      - 🇨🇦加拿大
+      - 🇦🇺澳大利亚
+      - 直连
+    <<: *groupBaseOption
+
+  # 启用 youtube 时添加
+  - name: YouTube
+    type: select
+    url: https://www.youtube.com/s/desktop/494dd881/img/favicon.ico
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/YouTube.png
+    proxies:
+      - 默认节点
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇯🇵日本
+      - 🇰🇷韩国
+      - 🇸🇬新加坡
+      - 🇨🇳中国大陆
+      - 🇹🇼台湾
+      - 🇬🇧英国
+      - 🇩🇪德国
+      - 🇲🇾马来西亚
+      - 🇹🇷土耳其
+      - 🇨🇦加拿大
+      - 🇦🇺澳大利亚
+      - 直连
+    <<: *groupBaseOption
+
+  # 启用 tiktok 时添加
+  - name: Tiktok
+    type: select
+    url: https://www.tiktok.com/
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/TikTok.png
+    proxies:
+      - 默认节点
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇯🇵日本
+      - 🇰🇷韩国
+      - 🇸🇬新加坡
+      - 🇨🇳中国大陆
+      - 🇹🇼台湾
+      - 🇬🇧英国
+      - 🇩🇪德国
+      - 🇲🇾马来西亚
+      - 🇹🇷土耳其
+      - 🇨🇦加拿大
+      - 🇦🇺澳大利亚
+      - 直连
+    <<: *groupBaseOption
+
+  # 启用 pixiv 时添加
+  - name: Pixiv
+    type: select
+    url: http://spclient.wg.spotify.com/signup/public/v1/account
+    icon: https://play-lh.googleusercontent.com/8pFuLOHF62ADcN0ISUAyEueA5G8IF49mX_6Az6pQNtokNVHxIVbS1L2NM62H-k02rLM=w240-h480-rw
+    proxies:
+      - 默认节点
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇯🇵日本
+      - 🇰🇷韩国
+      - 🇸🇬新加坡
+      - 🇨🇳中国大陆
+      - 🇹🇼台湾
+      - 🇬🇧英国
+      - 🇩🇪德国
+      - 🇲🇾马来西亚
+      - 🇹🇷土耳其
+      - 🇨🇦加拿大
+      - 🇦🇺澳大利亚
+      - 直连
+    <<: *groupBaseOption
+
+  # 启用 biliintl 时添加
+  - name: 哔哩哔哩东南亚
+    type: select
+    url: https://www.bilibili.tv/
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/bilibili_3.png
+    proxies:
+      - 默认节点
+      - 直连
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇯🇵日本
+      - 🇰🇷韩国
+      - 🇸🇬新加坡
+      - 🇨🇳中国大陆
+      - 🇹🇼台湾
+      - 🇬🇧英国
+      - 🇩🇪德国
+      - 🇲🇾马来西亚
+      - 🇹🇷土耳其
+      - 🇨🇦加拿大
+      - 🇦🇺澳大利亚
+    <<: *groupBaseOption
+
+  # 启用 telegram 时添加
+  - name: Telegram
+    type: select
+    url: http://www.telegram.org/img/website_icon.svg
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png
+    proxies:
+      - 默认节点
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇯🇵日本
+      - 🇰🇷韩国
+      - 🇸🇬新加坡
+      - 🇨🇳中国大陆
+      - 🇹🇼台湾
+      - 🇬🇧英国
+      - 🇩🇪德国
+      - 🇲🇾马来西亚
+      - 🇹🇷土耳其
+      - 🇨🇦加拿大
+      - 🇦🇺澳大利亚
+      - 直连
+    <<: *groupBaseOption
+
+  # 启用 line 时添加
+  - name: Line
+    type: select
+    url: https://line.me/page-data/app-data.json
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Line.png
+    proxies:
+      - 默认节点
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇯🇵日本
+      - 🇰🇷韩国
+      - 🇸🇬新加坡
+      - 🇨🇳中国大陆
+      - 🇹🇼台湾
+      - 🇬🇧英国
+      - 🇩🇪德国
+      - 🇲🇾马来西亚
+      - 🇹🇷土耳其
+      - 🇨🇦加拿大
+      - 🇦🇺澳大利亚
+      - 直连
+    <<: *groupBaseOption
+
+  # 启用 whatsapp 时添加
+  - name: WhatsApp
+    type: select
+    url: https://web.whatsapp.com/data/manifest.json
+    icon: https://static.whatsapp.net/rsrc.php/v3/yP/r/rYZqPCBaG70.png
+    proxies:
+      - 默认节点
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇯🇵日本
+      - 🇰🇷韩国
+      - 🇸🇬新加坡
+      - 🇨🇳中国大陆
+      - 🇹🇼台湾
+      - 🇬🇧英国
+      - 🇩🇪德国
+      - 🇲🇾马来西亚
+      - 🇹🇷土耳其
+      - 🇨🇦加拿大
+      - 🇦🇺澳大利亚
+      - 直连
+    <<: *groupBaseOption
+
+  # 启用 games 时添加
+  - name: 游戏专用
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Game.png
+    proxies:
+      - 默认节点
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇯🇵日本
+      - 🇰🇷韩国
+      - 🇸🇬新加坡
+      - 🇨🇳中国大陆
+      - 🇹🇼台湾
+      - 🇬🇧英国
+      - 🇩🇪德国
+      - 🇲🇾马来西亚
+      - 🇹🇷土耳其
+      - 🇨🇦加拿大
+      - 🇦🇺澳大利亚
+      - 直连
+    <<: *groupBaseOption
+
+  # 启用 japan 时添加
+  - name: 日本网站
+    type: select
+    url: https://r.r10s.jp/com/img/home/logo/touch.png
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/JP.png
+    proxies:
+      - 默认节点
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇯🇵日本
+      - 🇰🇷韩国
+      - 🇸🇬新加坡
+      - 🇨🇳中国大陆
+      - 🇹🇼台湾
+      - 🇬🇧英国
+      - 🇩🇪德国
+      - 🇲🇾马来西亚
+      - 🇹🇷土耳其
+      - 🇨🇦加拿大
+      - 🇦🇺澳大利亚
+      - 直连
+    <<: *groupBaseOption
+
+  # 启用 ads 时添加
+  - name: 广告过滤
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Advertising.png
+    proxies:
+      - REJECT
+      - 直连
+      - 默认节点
+    <<: *groupBaseOption
+
+  # 固定代理组：下载软件
+  - name: 下载软件
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Download.png
+    proxies:
+      - 直连
+      - REJECT
+      - 默认节点
+      - 国内网站
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇯🇵日本
+      - 🇰🇷韩国
+      - 🇸🇬新加坡
+      - 🇨🇳中国大陆
+      - 🇹🇼台湾
+      - 🇬🇧英国
+      - 🇩🇪德国
+      - 🇲🇾马来西亚
+      - 🇹🇷土耳其
+      - 🇨🇦加拿大
+      - 🇦🇺澳大利亚
+    <<: *groupBaseOption
+
+  # 固定代理组：其他外网
+  - name: 其他外网
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Streaming!CN.png
+    proxies:
+      - 默认节点
+      - 国内网站
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇯🇵日本
+      - 🇰🇷韩国
+      - 🇸🇬新加坡
+      - 🇨🇳中国大陆
+      - 🇹🇼台湾
+      - 🇬🇧英国
+      - 🇩🇪德国
+      - 🇲🇾马来西亚
+      - 🇹🇷土耳其
+      - 🇨🇦加拿大
+      - 🇦🇺澳大利亚
+    <<: *groupBaseOption
+
+  # 固定代理组：国内网站
+  - name: 国内网站
+    type: select
+    url: http://wifi.vivo.com.cn/generate_204
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/StreamingCN.png
+    proxies:
+      - 直连
+      - 默认节点
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇯🇵日本
+      - 🇰🇷韩国
+      - 🇸🇬新加坡
+      - 🇨🇳中国大陆
+      - 🇹🇼台湾
+      - 🇬🇧英国
+      - 🇩🇪德国
+      - 🇲🇾马来西亚
+      - 🇹🇷土耳其
+      - 🇨🇦加拿大
+      - 🇦🇺澳大利亚
+    <<: *groupBaseOption
+
+  # --------------------------------------------------
+  # 地区代理组 (倍率過濾 < 2x)
+  # 【修正】: 移除了 "use: [airport1]"，
+  #          改為直接過濾 "proxies:" 列表
+  # --------------------------------------------------
+  - name: 🇭🇰香港
+    type: url-test
+    tolerance: 50
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Hong_Kong.png
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:港|🇭🇰|hk|hongkong|hong kong)'
+    <<: *groupBaseOption
