@@ -1,8 +1,9 @@
 # Clash Verge Rev 全局扩展脚本（懒人配置）/ Mihomo Party 覆写脚本
-# URL: https://github.com/dahaha-365/YaNet/
+# URL: https://github.com/dahaha-300/YaNet/
 # 
 # ------------------------------------------------------------------
-# 這是根據 JS 腳本產生的靜態 YAML 完整設定檔。
+# 這是根據您提供的 JS 腳本產生的靜態 YAML 完整設定檔。
+# (修正版：已修正錨點錯誤，並包含節點倍率過濾 < 2x)
 # ------------------------------------------------------------------
 
 # 機場訂閱
@@ -23,8 +24,12 @@ ruleProviderCommon:
   format: yaml
   interval: 86400
 
-# 代理组通用配置
-groupBaseOption:
+# ------------------------------------------------------------------
+# 【修正】: 將 groupBaseOption 定義為隱藏的 YAML 錨點
+# ------------------------------------------------------------------
+# 代理组通用配置 (錨點定義)
+# 這是一個YAML錨點，不會被Clash讀取，僅用於重用配置
+.groupBaseOption: &groupBaseOption
   interval: 300
   timeout: 3000
   url: http://cp.cloudflare.com/generate_204
@@ -249,7 +254,7 @@ proxy-groups:
       - 直连
     <<: *groupBaseOption
 
-  # 启用 spotify 时添加
+  # 啟用 spotify 時添加
   - name: Spotify
     type: select
     url: http://spclient.wg.spotify.com/signup/public/v1/account
@@ -478,6 +483,7 @@ proxy-groups:
       - 直连
     <<: *groupBaseOption
 
+This is the `proxy-groups:` section.
   # 启用 ads 时添加
   - name: 广告过滤
     type: select
@@ -667,13 +673,13 @@ proxy-groups:
     filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:澳大利亚|🇦🇺|au|australia|sydney)'
     <<: *groupBaseOption
 
-  # 其他节点组（未分類節點 和 > 2x 的節點）
+  # 其他节点组（未分類節點 和 >= 2x 的節點）
   - name: 其他节点
     type: select
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/World_Map.png
     use:
       - airport1
-    # 排除所有 "匹配地區 且 倍率 < 2x" 的節點
+    # 【修正】：排除所有 "匹配地區 且 倍率 < 2x" 的節點
     exclude-filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:(港|🇭🇰|hk|hongkong|hong kong)|((?!.*aus)(?=.*(美|🇺🇸|us(?!t)|usa|american|united states)).*)|(日本|🇯🇵|jp|japan)|(韩|🇰🇷|kr|korea)|(新加坡|🇸🇬|sg|singapore)|(中国|🇨🇳|cn|china)|(台湾|🇹🇼|tw|taiwan|tai wan)|(英|🇬🇧|uk|united kingdom|great britain)|(德国|🇩🇪|de|germany)|(马来|🇲🇾|my|malaysia)|(土耳其|🇹🇷|tk|turkey)|(加拿大|🇨🇦|ca|canada)|(澳大利亚|🇦🇺|au|australia|sydney))'
     <<: *groupBaseOption
 
