@@ -2,14 +2,13 @@
 # URL: https://github.com/dahaha-300/YaNet/
 # 
 # ------------------------------------------------------------------
-# 這是根據您提供的 JS 腳本產生的靜態 YAML 完整設定檔。
-# (修正版：已刪除錯誤行，並包含節點倍率過濾 < 2x)
+# 這是根據 JS 腳本產生的靜態 YAML 完整設定檔。
 # ------------------------------------------------------------------
 
 # 機場訂閱
 proxy-providers:
   airport1:
-    url: "https://sub-1.smjcdh.top/smjc/api/v1/client/subscribe?token=c0c800c965f24eac4d313a5a25c0bfae"
+    url: "在这里填写订阅"
     type: http
     interval: 86400
     health-check:
@@ -24,8 +23,6 @@ ruleProviderCommon:
   format: yaml
   interval: 86400
 
-# ------------------------------------------------------------------
-# 【修正】: 將 groupBaseOption 定義為隱藏的 YAML 錨點
 # ------------------------------------------------------------------
 # 代理组通用配置 (錨點定義)
 # 這是一個YAML錨點，不會被Clash讀取，僅用於重用配置
