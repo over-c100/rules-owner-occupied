@@ -3,7 +3,7 @@
 # 
 # ------------------------------------------------------------------
 # 這是根據您提供的 JS 腳本產生的靜態 YAML 完整設定檔。
-# (修正版：已修正 stray text 錯誤，並包含節點倍率過濾 < 2x)
+# (修正版：已刪除錯誤行，並包含節點倍率過濾 < 2x)
 # ------------------------------------------------------------------
 
 # 機場訂閱
@@ -413,3 +413,393 @@ proxy-groups:
       - 🇨🇦加拿大
       - 🇦🇺澳大利亚
       - 直连
+    <<: *groupBaseOption
+
+  # 启用 whatsapp 时添加
+  - name: WhatsApp
+    type: select
+    url: https://web.whatsapp.com/data/manifest.json
+    icon: https://static.whatsapp.net/rsrc.php/v3/yP/r/rYZqPCBaG70.png
+    proxies:
+      - 默认节点
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇯🇵日本
+      - 🇰🇷韩国
+      - 🇸🇬新加坡
+      - 🇨🇳中国大陆
+      - 🇹🇼台湾
+      - 🇬🇧英国
+      - 🇩🇪德国
+      - 🇲🇾马来西亚
+      - 🇹🇷土耳其
+      - 🇨🇦加拿大
+      - 🇦🇺澳大利亚
+      - 直连
+    <<: *groupBaseOption
+
+  # 启用 games 时添加
+  - name: 游戏专用
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Game.png
+    proxies:
+      - 默认节点
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇯🇵日本
+      - 🇰🇷韩国
+      - 🇸🇬新加坡
+      - 🇨🇳中国大陆
+      - 🇹🇼台湾
+      - 🇬🇧英国
+      - 🇩🇪德国
+      - 🇲🇾马来西亚
+      - 🇹🇷土耳其
+      - 🇨🇦加拿大
+      - 🇦🇺澳大利亚
+      - 直连
+    <<: *groupBaseOption
+
+  # 启用 japan 时添加
+  - name: 日本网站
+    type: select
+    url: https://r.r10s.jp/com/img/home/logo/touch.png
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/JP.png
+    proxies:
+      - 默认节点
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇯🇵日本
+      - 🇰🇷韩国
+      - 🇸🇬新加坡
+      - 🇨🇳中国大陆
+      - 🇹🇼台湾
+      - 🇬🇧英国
+      - 🇩🇪德国
+      - 🇲🇾马来西亚
+      - 🇹🇷土耳其
+      - 🇨🇦加拿大
+      - 🇦🇺澳大利亚
+      - 直连
+    <<: *groupBaseOption
+
+  # 启用 ads 时添加
+  - name: 广告过滤
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Advertising.png
+    proxies:
+      - REJECT
+      - 直连
+      - 默认节点
+    <<: *groupBaseOption
+
+  # 固定代理组：下载软件
+  - name: 下载软件
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Download.png
+    proxies:
+      - 直连
+      - REJECT
+      - 默认节点
+      - 国内网站
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇯🇵日本
+      - 🇰🇷韩国
+      - 🇸🇬新加坡
+      - 🇨🇳中国大陆
+      - 🇹🇼台湾
+      - 🇬🇧英国
+      - 🇩🇪德国
+      - 🇲🇾马来西亚
+      - 🇹🇷土耳其
+      - 🇨🇦加拿大
+      - 🇦🇺澳大利亚
+    <<: *groupBaseOption
+
+  # 固定代理组：其他外网
+  - name: 其他外网
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Streaming!CN.png
+    proxies:
+      - 默认节点
+      - 国内网站
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇯🇵日本
+      - 🇰🇷韩国
+      - 🇸🇬新加坡
+      - 🇨🇳中国大陆
+      - 🇹🇼台湾
+      - 🇬🇧英国
+      - 🇩🇪德国
+      - 🇲🇾马来西亚
+      - 🇹🇷土耳其
+      - 🇨🇦加拿大
+      - 🇦🇺澳大利亚
+    <<: *groupBaseOption
+
+  # 固定代理组：国内网站
+  - name: 国内网站
+    type: select
+    url: http://wifi.vivo.com.cn/generate_204
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/StreamingCN.png
+    proxies:
+      - 直连
+      - 默认节点
+      - 🇭🇰香港
+      - 🇺🇸美国
+      - 🇯🇵日本
+      - 🇰🇷韩国
+      - 🇸🇬新加坡
+      - 🇨🇳中国大陆
+      - 🇹🇼台湾
+      - 🇬🇧英国
+      - 🇩🇪德国
+      - 🇲🇾马来西亚
+      - 🇹🇷土耳其
+      - 🇨🇦加拿大
+      - 🇦🇺澳大利亚
+    <<: *groupBaseOption
+
+  # 地区代理组
+  # --------------------------------------------------
+  # 【修正】: 以下 filter 已更新，
+  #          用於過濾倍率 < 2x (不包含 2x) 的節點
+  # --------------------------------------------------
+  - name: 🇭🇰香港
+    type: url-test
+    tolerance: 50
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Hong_Kong.png
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:港|🇭🇰|hk|hongkong|hong kong)'
+    <<: *groupBaseOption
+  - name: 🇺🇸美国
+    type: url-test
+    tolerance: 50
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_States.png
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:(?!.*aus)(?=.*(美|🇺🇸|us(?!t)|usa|american|united states)).*)'
+    <<: *groupBaseOption
+  - name: 🇯🇵日本
+    type: url-test
+    tolerance: 50
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Japan.png
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:日本|🇯🇵|jp|japan)'
+    <<: *groupBaseOption
+  - name: 🇰🇷韩国
+    type: url-test
+    tolerance: 50
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Korea.png
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:韩|🇰🇷|kr|korea)'
+    <<: *groupBaseOption
+  - name: 🇸🇬新加坡
+    type: url-test
+    tolerance: 50
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Singapore.png
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:新加坡|🇸🇬|sg|singapore)'
+    <<: *groupBaseOption
+  - name: 🇨🇳中国大陆
+    type: url-test
+    tolerance: 50
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/China_Map.png
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:中国|🇨🇳|cn|china)'
+    <<: *groupBaseOption
+  - name: 🇹🇼台湾
+    type: url-test
+    tolerance: 50
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/China.png
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:台湾|🇹🇼|tw|taiwan|tai wan)'
+    <<: *groupBaseOption
+  - name: 🇬🇧英国
+    type: url-test
+    tolerance: 50
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_Kingdom.png
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:英|🇬🇧|uk|united kingdom|great britain)'
+    <<: *groupBaseOption
+  - name: 🇩🇪德国
+    type: url-test
+    tolerance: 50
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Germany.png
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:德国|🇩🇪|de|germany)'
+    <<: *groupBaseOption
+  - name: 🇲🇾马来西亚
+    type: url-test
+    tolerance: 50
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Malaysia.png
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:马来|🇲🇾|my|malaysia)'
+    <<: *groupBaseOption
+  - name: 🇹🇷土耳其
+    type: url-test
+    tolerance: 50
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Turkey.png
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:土耳其|🇹🇷|tk|turkey)'
+    <<: *groupBaseOption
+  - name: 🇨🇦加拿大
+    type: url-test
+    tolerance: 50
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Canada.png
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:加拿大|🇨🇦|ca|canada)'
+    <<: *groupBaseOption
+  - name: 🇦🇺澳大利亚
+    type: url-test
+    tolerance: 50
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Australia.png
+    use:
+      - airport1
+    filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:澳大利亚|🇦🇺|au|australia|sydney)'
+    <<: *groupBaseOption
+
+  # 其他节点组（未分類節點 和 >= 2x 的節點）
+  - name: 其他节点
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/World_Map.png
+    use:
+      - airport1
+    # 【修正】：排除所有 "匹配地區 且 倍率 < 2x" 的節點
+    exclude-filter: '(?i)^(?!.*[xX✕✖⨉倍率]\s*(?:[2-9]|\d{2,})(?:\.\d+)?).*(?:(港|🇭🇰|hk|hongkong|hong kong)|((?!.*aus)(?=.*(美|🇺🇸|us(?!t)|usa|american|united states)).*)|(日本|🇯🇵|jp|japan)|(韩|🇰🇷|kr|korea)|(新加坡|🇸🇬|sg|singapore)|(中国|🇨🇳|cn|china)|(台湾|🇹🇼|tw|taiwan|tai wan)|(英|🇬🇧|uk|united kingdom|great britain)|(德国|🇩🇪|de|germany)|(马来|🇲🇾|my|malaysia)|(土耳其|🇹🇷|tk|turkey)|(加拿大|🇨🇦|ca|canada)|(澳大利亚|🇦🇺|au|australia|sydney))'
+    <<: *groupBaseOption
+
+# 规则集
+rules:
+  # 前置规则
+  - RULE-SET,applications,下载软件
+  - PROCESS-NAME,SunloginClient,DIRECT
+  - PROCESS-NAME,SunloginClient.exe,DIRECT
+  - PROCESS-NAME,AnyDesk,DIRECT
+  - PROCESS-NAME,AnyDesk.exe,DIRECT
+  - PROCESS-NAME,节点小宝,DIRECT
+  - PROCESS-NAME,nblink.exe,DIRECT
+  - PROCESS-NAME,NodeBabyLinkBackup,DIRECT
+  - PROCESS-NAME,NodeBabyLinkClient,DIRECT
+  - PROCESS-NAME,NodeBabyLinkRfile,DIRECT
+  - PROCESS-NAME,NodeBabyLinkBackup.exe,DIRECT
+  - PROCESS-NAME,NodeBabyLinkClient.exe,DIRECT
+  - PROCESS-NAME,NodeBabyLinkDevice.exe,DIRECT
+  - PROCESS-NAME,NodeBabyLinkOwjdxb.exe,DIRECT
+  - PROCESS-NAME,NodeBabyLinkRfile.exe,DIRECT
+  - PROCESS-NAME,NodeBabyLinkService.exe,DIRECT
+  - DOMAIN-SUFFIX,iepose.com,DIRECT
+  - DOMAIN-SUFFIX,ionewu.com,DIRECT
+  - DOMAIN-SUFFIX,3.219.243.226,REJECT
+  - DOMAIN-SUFFIX,3.233.129.217,REJECT
+  - DOMAIN-SUFFIX,54.224.241.105,REJECT
+  - DOMAIN-SUFFIX,18.213.11.84,REJECT
+  - DOMAIN-SUFFIX,34.237.241.83,REJECT
+  - DOMAIN-SUFFIX,50.16.47.176,REJECT
+  - DOMAIN-SUFFIX,52.6.155.20,REJECT
+  - DOMAIN-SUFFIX,52.22.41.97,REJECT
+  - DOMAIN-KEYWORD,Adobe,REJECT
+  - DOMAIN-KEYWORD,adobe,REJECT
+  - PROCESS-NAME,Photoshop.exe,REJECT
+
+  # 启用 openai 时添加的规则
+  - DOMAIN-SUFFIX,grazie.ai,国外AI
+  - DOMAIN-SUFFIX,grazie.aws.intellij.net,国外AI
+  - RULE-SET,ai,国外AI
+
+  # 启用 youtube 时添加的规则
+  - GEOSITE,youtube,YouTube
+
+  # 启用 biliintl 时添加的规则
+  - GEOSITE,biliintl,哔哩哔哩东南亚
+
+  # 启用 tiktok 时添加的规则
+  - GEOSITE,tiktok,Tiktok
+
+  # 启用 pixiv 时添加的规则
+  - GEOSITE,pixiv,Pixiv
+
+  # 启用 spotify 时添加的规则
+  - GEOSITE,spotify,Spotify
+
+  # 启用 google 时添加的规则
+  - GEOSITE,google,谷歌服务
+
+  # 启用 github 时添加的规则
+  - GEOSITE,github,Github
+
+  # 启用 microsoft 时添加的规则
+  - GEOSITE,microsoft@cn,国内网站
+  - GEOSITE,microsoft,微软服务
+
+  # 启用 telegram 时添加的规则
+  - GEOIP,telegram,Telegram
+
+  # 启用 whatsapp 时添加的规则
+  - GEOSITE,whatsapp,WhatsApp
+
+  # 启用 line 时添加的规则
+  - GEOSITE,line,Line
+
+  # 启用 games 时添加的规则
+  - GEOSITE,category-games@cn,国内网站
+  - GEOSITE,category-games,游戏专用
+
+  # 启用 japan 时添加的规则
+  - RULE-SET,category-bank-jp,日本网站
+  - GEOIP,jp,日本网站,no-resolve
+
+  # 启用 ads 时添加的规则
+  - GEOSITE,category-ads-all,广告过滤
+  - RULE-SET,adblockmihomo,广告过滤
+
+  # 固定末尾规则
+  - GEOSITE,private,DIRECT
+  - GEOIP,private,DIRECT,no-resolve
+  - GEOSITE,cn,国内网站
+  - GEOIP,cn,国内网站,no-resolve
+  - MATCH,其他外网
+
+# 规则提供者
+rule-providers:
+  applications:
+    type: http
+    format: text
+    interval: 86400
+    behavior: classical
+    url: https://github.com/DustinWin/ruleset_geodata/raw/refs/heads/mihomo-ruleset/applications.list
+    path: ./ruleset/DustinWin/applications.list
+  ai:
+    type: http
+    format: text
+    interval: 86400
+    behavior: classical
+    url: https://github.com/dahaha-365/YaNet/raw/refs/heads/dist/rulesets/mihomo/ai.list
+    path: ./ruleset/YaNet/ai.list
+  adblockmihomo:
+    type: http
+    format: mrs
+    interval: 86400
+    behavior: domain
+    url: https://github.com/217heidai/adblockfilters/raw/refs/heads/main/rules/adblockmihomo.mrs
+    path: ./ruleset/adblockfilters/adblockmihomo.mrs
+  category-bank-jp:
+    type: http
+    format: mrs
+    interval: 86400
+    behavior: domain
+    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-bank-jp.mrs
+    path: ./ruleset/MetaCubeX/category-bank-jp.mrs
