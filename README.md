@@ -6,6 +6,6 @@ Mihomo Party 屏蔽ps反盗版连接覆写脚本
 
 [Mihomo Party 订阅链接.js](https://raw.githubusercontent.com/over-c100/rules-owner-occupied/main/override/global_script.js) 
 [FlClash订阅链接.js]
-.(https://raw.githubusercontent.com/over-c100/rules-owner-occupied/refs/heads/main/override/global_script_phone.js)
+(https://raw.githubusercontent.com/over-c100/rules-owner-occupied/refs/heads/main/override/global_script_phone.js)
 
 [Mihomo Party 订阅链接.yaml](https://raw.githubusercontent.com/over-c100/rules-owner-occupied/main/override/global_script.yaml)
